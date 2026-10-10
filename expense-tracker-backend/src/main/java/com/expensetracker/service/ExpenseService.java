@@ -1,5 +1,6 @@
 package com.expensetracker.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +20,12 @@ public class ExpenseService {
 
     // CREATE
     public Expense createExpense(Expense expense) {
-        return expenseRepository.save(expense);
+    if (expense.getExpenseDate() == null) {
+        expense.setExpenseDate(LocalDate.now());
     }
 
+        return expenseRepository.save(expense);
+    }
     // READ - all expenses
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
