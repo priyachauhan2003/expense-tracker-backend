@@ -11,6 +11,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "expenses")
@@ -20,13 +24,16 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Title is required")
+    @Size(max = 100, message = "Title must not exceed 100 characters")
     private String title;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @NotNull(message = "Amount is required")
+    @Positive(message = "Amount must be greater than zero")
     private BigDecimal amount;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Category is required")
+    @Size(max = 50, message = "Category must not exceed 50 characters")
     private String category;
 
     @Column(nullable = false)
